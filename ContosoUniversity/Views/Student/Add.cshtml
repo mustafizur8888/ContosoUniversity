@@ -1,0 +1,28 @@
+﻿@model ContosoUniversity.Models.Student
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+<div class="form-group">
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.LabelFor(x => x.LastName)
+        @Html.TextBoxFor(x => x.LastName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.LastName)
+
+        @Html.LabelFor(x => x.FirstMidName)
+        @Html.TextBoxFor(x => x.FirstMidName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.FirstMidName)
+
+        @Html.LabelFor(x => x.EnrollmentDate)
+        @Html.TextBoxFor(x => x.EnrollmentDate, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.EnrollmentDate)
+        <br />
+        <input type="submit" value="Create" class="btn btn-primary" />
+    }
+</div>

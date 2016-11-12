@@ -1,0 +1,93 @@
+﻿@model  PagedList.IPagedList<ContosoUniversity.Models.Student>
+@using PagedList.Mvc
+<link href="~/Content/PagedList.css" rel="stylesheet">
+@{
+    ViewBag.Title = "Student";
+}
+
+<h2>Students</h2>
+@Html.ActionLink("Add New", "Add", "Student")
+<br />
+@using (Html.BeginForm("Index", "Student", FormMethod.Get))
+{
+    <p>
+        Find by name: @Html.TextBox("searchString", ViewBag.CurrentFilter as string,
+                     new { @class = "form-control-static" })
+        <input type="submit" value="Search" class="btn btn-primary" />
+
+    </p>
+}
+<table class="table table-hover table-striped">
+    <tr>
+        <th>
+            <span>Last Name</span>
+            <a href="@Url.Action("Index",
+                    new {sortOrder = ViewBag.sortOrder,
+                        currentFilter = ViewBag.CurrentFilter
+                    })">
+                @if (ViewBag.sortOrder == "")
+                {
+                    <i class="glyphicon glyphicon-arrow-up"></i>
+
+                }
+                else if (ViewBag.sortOrder == "name_desc")
+                {
+                    <i class="glyphicon glyphicon-arrow-down"></i>
+
+                }
+            </a>
+
+        </th>
+        <th>
+            First Name
+        </th>
+        <th>
+            <span>Enrollment Date</span>
+            <a href="@Url.Action("Index", new
+                     {
+                         sortOrder = ViewBag.sortDateOrder,
+                         currentFilter = ViewBag.CurrentFilter
+                     })">
+
+
+                @if (ViewBag.sortDateOrder == "date_desc")
+                {
+                    <i class="glyphicon glyphicon-arrow-up"></i>
+
+                }
+                else if (ViewBag.sortDateOrder == "Date")
+                {
+                    <i class="glyphicon glyphicon-arrow-down"></i>
+
+                }
+            </a>
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstMidName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EnrollmentDate)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
+</table>
+
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
