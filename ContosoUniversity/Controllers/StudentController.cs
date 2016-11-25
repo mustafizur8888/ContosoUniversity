@@ -159,7 +159,7 @@ namespace ContosoUniversity.Controllers
             return View(studentToDelete);
         }
         [HttpPost]
-        public ActionResult Delete([Bind(Include = "Id")]Student student)
+        public ActionResult Delete([Bind(Include = "ID")]Student student)
         {
 
             Student studentToDelete = _db.Students.Find(student.ID);

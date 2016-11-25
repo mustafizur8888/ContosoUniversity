@@ -1,0 +1,29 @@
+﻿@model ContosoUniversity.Controllers.CourseViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create", "Course"))
+{
+
+    @Html.LabelFor(x => x.Course.CourseID)
+    @Html.EditorFor(x => x.Course.CourseID,
+    ViewBag.Readonly ? (object)new { htmlAttributes = new { @readonly = "readonly",
+        @class = "form-control" } } : new { htmlAttributes = new { @class = "form-control" } })
+
+   
+
+    @Html.LabelFor(x => x.Course.Title)
+    @Html.TextBoxFor(x => x.Course.Title, new { @class = "form-control" })
+
+    @Html.LabelFor(x => x.Course.Credits)
+    @Html.TextBoxFor(x => x.Course.Credits, new { @class = "form-control" })
+
+    @Html.LabelFor(x => x.Course.Department)
+    @Html.DropDownListFor(x => x.Course.DepartmentID, Model.Department, "Select", new { @class = "form-control" })
+    <br />
+    <input type="submit" value="Submit" class="btn btn-info" />
+}
